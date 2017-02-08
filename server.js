@@ -1,8 +1,10 @@
 let express = require('express');
 let app = express();
 
-const port= 3000;
+const localPort = 3000;
 
+let port = process.env.PORT || localPort;
+app.set('port', port);
 app.listen(port);
 
 app.use('/hello', (req, res, next) => {
