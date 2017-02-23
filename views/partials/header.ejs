@@ -12,3 +12,21 @@
         <div class="panel-heading">
             <h1>Seth Kaminski</h1>
         </div>
+
+        <ul class="nav nav-tabs">
+            <li role="presentation" 
+                <% if(title == "Home") { %> class="active" <% } %>
+            > <a  href="/"> Home </a> </li>
+            <li role="presentation"
+                <% if(title == "About") { %> class="active" <% } %>
+            > <a  href="/about"> About </a> </li>
+            <li role="presentation"
+                <% if(title == "Projects") { %> class="active" <% } %>
+            > <a  href="/projects"> Projects </a> </li>
+            <li role="presentation"
+                <% if(title == "Services") { %> class="active" <% } %>
+            > <a  href="/services"> Services </a> </li>
+            <li role="presentation"
+                <% if(title == "Contact") { %> class="active" <% } %>
+            > <a  href="/contact"> Contact </a> </li>
+        </ul>
