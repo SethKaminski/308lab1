@@ -4,6 +4,18 @@ let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+let mongoose = require('mongoose');
+
+let configDB = require('./config/db');
+
+mongoose.connect(configDB.URI);
+
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log("Connected to MongoDB");
+})
+
 
 let index = require('./routes/index');
 
@@ -13,13 +25,13 @@ let app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', '/assets/images/Bandet.png')));
+// uncomment after placing your favicon in /client
+app.use(favicon(path.join(__dirname, '../client', './assets/images/Bandet.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/', index);
 app.use('/about', index);
