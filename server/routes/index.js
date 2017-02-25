@@ -29,17 +29,4 @@ router.get('/contact', (req, res, next) => {
   res.render('content/contact', { title: 'Contact' });
 });
 
-/* GET Games page. */
-router.get('/games', (req, res, next) => {
-  game.find((err, games) => {
-    if (err) {
-      return console.error(err);
-    } else {
-      res.render('content/games', {
-         title: 'Games',
-        games: games });
-    }
-  });
-});
-
 module.exports = router;

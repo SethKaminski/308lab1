@@ -8,7 +8,7 @@ let mongoose = require('mongoose');
 
 let configDB = require('./config/db');
 
-mongoose.connect(configDB.URI);
+mongoose.connect(process.env.URI || configDB.URI);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -18,6 +18,7 @@ db.once('open', () => {
 
 
 let index = require('./routes/index');
+let games = require('./routes/games');
 
 let app = express();
 
@@ -34,7 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/', index);
-app.use('/about', index);
+app.use('/games', games);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
