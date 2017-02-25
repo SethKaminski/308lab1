@@ -1,9 +1,6 @@
 let express = require('express');
 let router = express.Router();
 
-let mongoose = require('mongoose');
-let game = require('../models/games');
-
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('content/index', { title: 'Home' });

@@ -4,8 +4,17 @@ let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
-let mongoose = require('mongoose');
 
+
+//module for authentication
+let session = require('express-session');
+let passport = require('passport');
+let passportLocal = require('passport-local');
+let LocalStrategy = passportLocal.Strategy;
+let flash = require('connect-flash');
+
+//db
+let mongoose = require('mongoose');
 let configDB = require('./config/db');
 
 mongoose.connect(process.env.URI || configDB.URI);
@@ -33,6 +42,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
+
+//session setup
+app.use(session({
+  secret: 'SomeSecret',
+  saveUninitialized: true,
+  resave: true
+}));
+
+//passport and flash setup
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/games', games);

@@ -25,11 +25,10 @@ router.get('/edit/:id', (req, res, next) => {
       console.error(err);
       res.end(error);
     } else {
-        console.log(id);
-      res.render('games/details', {
-         title: 'Edit Games',
-         buttonText: 'Edit',
-         games: games });
+        res.render('games/details', {
+          title: 'Edit Games',
+          buttonText: 'Edit',
+          games: games });
     }
   });
 });
