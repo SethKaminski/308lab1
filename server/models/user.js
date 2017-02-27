@@ -8,11 +8,6 @@ let userSchema = new schema({
         trim: true,
         required: 'username is required'
     },
-    password: {
-        type: String,
-        trim: true,
-        required: 'password is required'
-    },
     email: {
         type: String,
         trim: true,

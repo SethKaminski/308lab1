@@ -1,6 +1,18 @@
 let express = require('express');
 let router = express.Router();
 
+let passport = require('passport');
+let UserModel = require('../models/user');
+let User = UserModel.User;
+
+//check if authenticated
+function requireAuth(req, res, next) {
+  if(!req.isAuthenticated()) {
+    return res.redirect('auth/login');
+  }
+  next();
+}
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('content/index', { title: 'Home' });

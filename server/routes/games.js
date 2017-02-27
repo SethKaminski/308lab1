@@ -4,8 +4,19 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let game = require('../models/games');
 
+let UserModel = require('../models/user');
+let User = UserModel.User;
+
+//check if authenticated
+function requireAuth(req, res, next) {
+  /*if(!req.isAuthenticated()) {
+    return res.redirect('/auth/login');
+  }*/
+  next();
+}
+
 /* GET Games page. */
-router.get('/', (req, res, next) => {
+router.get('/', requireAuth, (req, res, next) => {
   game.find((err, games) => {
     if (err) {
       return console.error(err);
@@ -18,7 +29,7 @@ router.get('/', (req, res, next) => {
 });
 
 /* GET Edit Games page. */
-router.get('/edit/:id', (req, res, next) => {
+router.get('/edit/:id', requireAuth, (req, res, next) => {
   let id = req.params.id;
   game.findById(id, (err, games) => {
     if (err) {
@@ -34,7 +45,7 @@ router.get('/edit/:id', (req, res, next) => {
 });
 
 /* Post Edit Game page. */
-router.post('/edit/:id', (req, res, next) => {
+router.post('/edit/:id', requireAuth, (req, res, next) => {
   let id = req.params.id;
   let editedGame = new game({
     "_id": id,
@@ -54,7 +65,7 @@ router.post('/edit/:id', (req, res, next) => {
 });
 
 /* GET Delete Games page. */
-router.get('/delete/:id', (req, res, next) => {
+router.get('/delete/:id', requireAuth, (req, res, next) => {
   let id = req.params.id;
   game.remove({_id: id}, (err) => {
     if (err) {
@@ -67,7 +78,7 @@ router.get('/delete/:id', (req, res, next) => {
 });
 
 /* GET Add game page. */
-router.get('/add', (req, res, next) => {    
+router.get('/add', requireAuth, (req, res, next) => {    
     res.render('games/details', {
         title: 'Add Games',
         buttonText: 'Add',
@@ -75,7 +86,7 @@ router.get('/add', (req, res, next) => {
 });
 
 /* Post Add Game page. */
-router.post('/add', (req, res, next) => {
+router.post('/add', requireAuth, (req, res, next) => {
   let newGame = new game({
     "name": req.body.name,
     "rating": req.body.rating,
